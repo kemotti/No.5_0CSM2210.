@@ -1,0 +1,50 @@
+import numpy as np
+
+node_l = {
+    "1":0,
+    "2":np.inf,
+    "3":np.inf,
+    "4":np.inf,
+    "5":np.inf,
+    "6":np.inf,
+    "7":np.inf,
+    "8":np.inf,
+    "9":np.inf,
+    "10":np.inf
+
+}
+
+node_l_ = {}
+
+edge = {
+    #ここにノードの経路を記述する。
+}
+
+while True:
+    
+    if len(node_l) == 1:
+        min_edge = list(node_l.keys())[0]
+    else:
+        min_edge = min(node_l, key=node_l.get)
+
+    
+    del_list = []
+    for i in edge:
+        for j in edge[i]:
+            if j == min_edge:
+                del_list.append(i+j)
+    for i in del_list:
+        del edge[i[0]][i[1]]
+
+    for i,j in edge[min_edge].items():
+        if (j + node_l[min_edge]) < node_l[i]:
+            node_l[i] = j + node_l[min_edge]
+
+    node_l_[min_edge] = node_l[min_edge]
+    if len(edge) == 1:
+        break
+    del edge[min_edge]
+    del node_l[min_edge]
+
+  print("最短距離", end="")
+  print(node_l)
